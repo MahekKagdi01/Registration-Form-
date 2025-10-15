@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration Form</title>
+    <title>Registration Form Validation</title>
+
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6dd5fa, #2980b9);
+            font-family: Arial, sans-serif;
+            background-color: #f2f3f7;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,103 +17,128 @@
             margin: 0;
         }
 
-        .container {
+        .form-box {
             background: #fff;
             padding: 30px 40px;
             border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
         }
 
         h2 {
             text-align: center;
+            color: #333;
             margin-bottom: 25px;
-            color: #2980b9;
         }
 
         label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: bold;
+            color: #444;
         }
 
-        input {
+        input[type="text"],
+        input[type="password"],
+        textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
+            margin-top: 5px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1em;
-            outline: none;
-            transition: border-color 0.3s;
+            border-radius: 5px;
+            font-size: 14px;
         }
 
-        input:focus {
-            border-color: #2980b9;
-        }
-
-        button {
+        input[type="submit"] {
             width: 100%;
-            padding: 10px;
+            background-color: #007bff;
+            color: white;
             border: none;
-            border-radius: 6px;
-            background-color: #2980b9;
-            color: #fff;
-            font-size: 1em;
-            font-weight: 600;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
 
-        button:hover {
-            background-color: #1f6691;
-        }
-
-        p {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9em;
-        }
-
-        a {
-            color: #2980b9;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:hover {
-            text-decoration: underline;
+        input[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
+
+    <script>
+        function validateForm() {
+            let firstName = document.getElementById("fname").value.trim();
+            let lastName = document.getElementById("lname").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let address = document.getElementById("address").value.trim();
+
+            let namePattern = /^[A-Za-z]+$/;
+            if (firstName.length < 6 || !namePattern.test(firstName)) {
+                alert("❌ First Name should contain only alphabets and be at least 6 characters long.");
+                return false;
+            }
+
+            if (lastName === "") {
+                alert("❌ Last Name cannot be empty.");
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert("❌ Password must be at least 6 characters long.");
+                return false;
+            }
+
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                alert("❌ Please enter a valid email address (e.g. name@domain.com).");
+                return false;
+            }
+
+            let mobilePattern = /^[0-9]{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                alert("❌ Mobile number must contain exactly 10 digits.");
+                return false;
+            }
+
+            if (address === "") {
+                alert("❌ Address cannot be empty.");
+                return false;
+            }
+
+            alert("✅ Registration Successful!");
+            return true;
+        }
+    </script>
 </head>
 
 <body>
-
-    <div class="container">
+    <div class="form-box">
         <h2>Registration Form</h2>
-        <form>
-            <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Enter your name" required>
+        <form onsubmit="return validateForm()">
+            <label>First Name:</label>
+            <input type="text" id="fname">
 
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <label>Last Name:</label>
+            <input type="text" id="lname">
 
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a password" required>
+            <label>Email ID:</label>
+            <input type="text" id="email">
 
-            <label for="confirm">Confirm Password</label>
-            <input type="password" id="confirm" name="confirm" placeholder="Re-enter password" required>
+            <label>Password:</label>
+            <input type="password" id="password">
 
-            <button type="submit">Register</button>
+            <label>Mobile Number:</label>
+            <input type="text" id="mobile">
 
-            <p>Already have an account? <a href="#">Login here</a></p>
+            <label>Address:</label>
+            <textarea id="address" rows="3"></textarea>
+
+            <input type="submit" value="Register">
         </form>
     </div>
-
 </body>
 
 </html>
